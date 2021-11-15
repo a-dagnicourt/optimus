@@ -24,11 +24,14 @@ import Brightness7Icon from "@mui/icons-material/Brightness7";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 
+import { auth } from "../firebaseConfig";
+
 import { mainListItems, secondaryListItems } from "./listItems";
 import Chart from "./Chart";
 import Deposits from "./Deposits";
 import Orders from "./Orders";
 import StyleResetLink from "../components/StyleResetLink";
+import AvatarMenu from "../components/AvatarMenu";
 
 function Copyright(props) {
     return (
@@ -156,6 +159,10 @@ function DashboardContent({ props }) {
                                     <Brightness4Icon />
                                 )}
                             </IconButton>
+                            <AvatarMenu
+                                photoURL={auth.currentUser.photoURL}
+                                displayName={auth.currentUser.displayName}
+                            />
                         </Toolbar>
                     </AppBar>
                     <Drawer variant="permanent" open={open}>
