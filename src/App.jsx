@@ -39,7 +39,10 @@ export default function App() {
                     handleThemeChange={handleThemeChange}
                 />
             ) : (
-                <SignInPage />
+                <SignInPage
+                    darkState={darkState}
+                    handleThemeChange={handleThemeChange}
+                />
             )}
         </ThemeProvider>
     );

@@ -1,16 +1,21 @@
 import * as React from "react";
+
+import { ThemeProvider, useTheme } from "@mui/material/styles";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { signIn } from "../firebaseConfig";
-import { Google } from "@mui/icons-material";
+import { IconButton } from "@mui/material";
+
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Brightness4Icon from "@mui/icons-material/Brightness4";
+import Brightness7Icon from "@mui/icons-material/Brightness7";
+
 import GoogleButton from "react-google-button";
+
+import { signIn } from "../firebaseConfig";
 
 function Copyright(props) {
     return (
@@ -30,37 +35,60 @@ function Copyright(props) {
     );
 }
 
-export default function SignInPage() {
+export default function SignInPage(props) {
+    const { handleThemeChange } = props;
+    const theme = useTheme();
+
     return (
-        <Container
-            component="main"
-            maxWidth="xs"
-            sx={{
-                height: "100vh",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-            }}
-        >
-            <CssBaseline />
-            <Box
+        <ThemeProvider theme={theme}>
+            <Container
+                component="main"
+                maxWidth="xs"
                 sx={{
+                    height: "100vh",
                     display: "flex",
                     flexDirection: "column",
-                    alignItems: "center",
+                    justifyContent: "center",
                 }}
             >
-                <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-                    <LockOutlinedIcon />
-                </Avatar>
-                <Typography component="h1" variant="h4">
-                    Optimus
-                </Typography>
-                <Box sx={{ m: 10 }}>
-                    <GoogleButton onClick={() => signIn()} />
+                <CssBaseline />
+                <Box
+                    sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                    }}
+                >
+                    <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+                        <LockOutlinedIcon />
+                    </Avatar>
+                    <Typography component="h1" variant="h3">
+                        Optimus
+                    </Typography>
+                    <IconButton
+                        sx={{ mt: 4 }}
+                        onClick={() => {
+                            handleThemeChange();
+                        }}
+                        color="inherit"
+                    >
+                        {theme.palette.mode === "dark" ? (
+                            <Brightness7Icon />
+                        ) : (
+                            <Brightness4Icon />
+                        )}
+                    </IconButton>
+                    <Box sx={{ m: 10 }}>
+                        <GoogleButton
+                            onClick={() => signIn()}
+                            type={
+                                theme.palette.mode === "dark" ? "light" : "dark"
+                            }
+                        />
+                    </Box>
                 </Box>
-            </Box>
-            <Copyright />
-        </Container>
+                <Copyright />
+            </Container>
+        </ThemeProvider>
     );
 }
